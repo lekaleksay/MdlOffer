@@ -1,742 +1,107 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MediEstetic | Digital Barter Proposal</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            bg: '#f8fafc',
-                            primary: '#0f172a', // Deep navy
-                            accent: '#0284c7',  // Medical Blue
-                            gold: '#b45309',    // Premium Gold
-                            success: '#10b981', // Growth Green
-                            danger: '#ef4444'   // Shock-loss Red
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        
-        body { font-family: 'Inter', sans-serif; }
-        
-        /* Language toggle classes */
-        .lang-ru { display: none; } /* Hidden by default, EN is active */
-        .show-ru .lang-ru { display: block; }
-        .show-ru .lang-en { display: none; }
-        
-        /* Inline language toggle classes */
-        span.lang-ru, strong.lang-ru, h1.lang-ru, h2.lang-ru, h3.lang-ru, p.lang-ru { display: none; }
-        .show-ru span.lang-ru, .show-ru strong.lang-ru, .show-ru h1.lang-ru, .show-ru h2.lang-ru, .show-ru h3.lang-ru, .show-ru p.lang-ru { display: inline-block; }
-        .show-ru span.lang-en, .show-ru strong.lang-en, .show-ru h1.lang-en, .show-ru h2.lang-en, .show-ru h3.lang-en, .show-ru p.lang-en { display: none; }
-        
-        /* Handle block level specifically if needed */
-        .show-ru p.lang-ru { display: block; }
-
-        /* Accordion smooth transition */
-        .accordion-content {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.3s ease-in-out, opacity 0.3s ease-in-out;
-            opacity: 0;
-        }
-        .accordion-content.open {
-            grid-template-rows: 1fr;
-            opacity: 1;
-        }
-        .accordion-inner {
-            overflow: hidden;
-        }
-
-        /* Chevron rotation */
-        .chevron { transition: transform 0.3s ease; }
-        .open-chevron { transform: rotate(180deg); }
-
-        /* Phase Card Hover */
-        .phase-card { transition: all 0.3s ease; }
-        .phase-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); }
-    </style>
-</head>
-<body class="bg-brand-bg text-slate-800 antialiased selection:bg-brand-accent selection:text-white">
-
-    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-brand-primary text-white flex items-center justify-center shadow-lg">
-                    <i class="ph ph-cube-transparent text-xl"></i>
-                </div>
-                <div>
-                    <span class="font-bold text-xl tracking-tight block leading-none text-brand-primary">MediEstetic</span>
-                    <span class="text-[10px] uppercase tracking-widest text-brand-accent font-semibold flex items-center gap-1 mt-0.5">
-                        <i class="ph-fill ph-code"></i> MDL Lab Proposal
-                    </span>
-                </div>
-            </div>
+<!-- Contact Section -->
+        <section class="mt-14 mb-8 bg-white rounded-3xl p-8 sm:p-12 shadow-sm border border-slate-200 relative overflow-hidden">
+            <!-- Decorative background elements -->
+            <div class="absolute top-0 right-0 w-64 h-64 bg-brand-accent/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
             
-            <div class="bg-slate-100 p-1 rounded-lg flex items-center text-sm font-medium border border-slate-200">
-                <button onclick="setLang('en')" id="btn-en" class="px-4 py-1.5 rounded-md transition-all bg-white shadow-sm text-brand-primary">EN</button>
-                <button onclick="setLang('ru')" id="btn-ru" class="px-4 py-1.5 rounded-md transition-all text-slate-500 hover:text-brand-primary">RU</button>
-            </div>
-        </div>
-    </header>
-
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
-        
-        <section class="mb-12 bg-white rounded-3xl p-8 sm:p-12 shadow-sm border border-slate-200 relative overflow-hidden">
-            <!-- Decorative blur -->
-            <div class="absolute top-0 right-0 w-96 h-96 bg-brand-accent/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
-            <div class="absolute bottom-0 left-0 w-64 h-64 bg-brand-gold/5 rounded-full blur-3xl -ml-10 -mb-10 pointer-events-none"></div>
-            
-            <div class="relative z-10 max-w-4xl">
-                <div class="inline-flex items-center gap-2 px-3 py-1 bg-slate-900 rounded-full text-xs font-semibold text-white mb-6 shadow-sm">
-                    <i class="ph-fill ph-sparkle text-brand-gold"></i>
-                    <span class="lang-en">B2B Strategy & Proposal 2026</span>
-                    <span class="lang-ru">B2B Стратегия и Предложение 2026</span>
-                </div>
-                
-                <h1 class="text-4xl sm:text-5xl font-extrabold text-brand-primary leading-tight mb-6 tracking-tight">
-                    <span class="lang-en">Interactive Digital Solutions for <span class="text-brand-accent">MediEstetic</span> Clinic</span>
-                    <span class="lang-ru">Инновационные цифровые решения для клиники <span class="text-brand-accent">Медиэстетик</span></span>
-                </h1>
-                
-                <div class="text-slate-600 text-lg leading-relaxed mb-8 space-y-4">
-                    <p class="lang-en"><strong>Symbiosis of medicine and neural networks.</strong> Development of an end-to-end interactive ecosystem: from customer acquisition at exhibitions to sales conversion and post-op retention, effectively mitigating fear barriers.</p>
-                    <p class="lang-ru"><strong>Симбиоз медицины и нейросетей.</strong> Разработка интерактивной экосистемы полного цикла: от привлечения клиентов на выставках до роста продаж на консультациях и снятия тревожности в период реабилитации.</p>
-                </div>
-
-                <!-- Three pillars of value -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                        <i class="ph-duotone ph-shield-check text-2xl text-brand-accent mb-2"></i>
-                        <h4 class="font-bold text-slate-800 text-sm mb-1">
-                            <span class="lang-en">Mitigating Fear Barriers</span>
-                            <span class="lang-ru">Снятие барьеров страха</span>
-                        </h4>
-                        <p class="text-xs text-slate-500">
-                            <span class="lang-en">Simplifying and visualizing FUE/DHI via 3D modeling and gamified simulations.</span>
-                            <span class="lang-ru">Упрощение и визуализация FUE/DHI через 3D-моделирование и симуляции.</span>
-                        </p>
+            <div class="flex flex-col md:flex-row gap-10 items-center md:items-start justify-between relative z-10">
+                <div class="flex-1">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-full text-xs font-semibold text-slate-500 mb-4">
+                        <i class="ph-fill ph-address-book"></i>
+                        <span class="lang-en">Contact & Integration</span>
+                        <span class="lang-ru">Связь и интеграция</span>
                     </div>
-                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                        <i class="ph-duotone ph-path text-2xl text-brand-accent mb-2"></i>
-                        <h4 class="font-bold text-slate-800 text-sm mb-1">
-                            <span class="lang-en">End-to-End Journey</span>
-                            <span class="lang-ru">Сквозной клиентский путь</span>
-                        </h4>
-                        <p class="text-xs text-slate-500">
-                            <span class="lang-en">From the first touch at a booth to a one-year AI healing tracker.</span>
-                            <span class="lang-ru">От первого касания на стенде до годового трекера заживления.</span>
-                        </p>
-                    </div>
-                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                        <i class="ph-duotone ph-chart-line-up text-2xl text-brand-gold mb-2"></i>
-                        <h4 class="font-bold text-slate-800 text-sm mb-1">
-                            <span class="lang-en">Validating Premium Tier</span>
-                            <span class="lang-ru">Премиум-обоснование</span>
-                        </h4>
-                        <p class="text-xs text-slate-500">
-                            <span class="lang-en">AR/LiDAR metrics (XCharts) to position against mass-market alternatives in Turkey.</span>
-                            <span class="lang-ru">AR/LiDAR аналитика (XCharts) для отстройки от масс-маркета Турции.</span>
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Doctor Highlight Box -->
-                <div class="bg-gradient-to-r from-brand-primary to-slate-800 rounded-2xl p-6 shadow-md flex flex-col sm:flex-row items-start sm:items-center gap-5">
-                    <div class="w-16 h-16 shrink-0 rounded-full bg-brand-gold text-white flex items-center justify-center shadow-inner border-2 border-brand-gold/30">
-                        <i class="ph-fill ph-stethoscope text-3xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-white text-lg">
-                            <span class="lang-en">Integrated with Dr. Nedim Ardıç's Methodology</span>
-                            <span class="lang-ru">Интеграция с методикой Dr. Nedim Ardıç</span>
-                        </h3>
-                        <p class="text-sm text-slate-300 mt-1.5 leading-relaxed">
-                            <span class="lang-en">Visualizing the "Perfect Hairline". The modules are designed to accurately reflect the clinical protocols and detailed techniques used by Dr. Nedim Ardıç in FUE/DHI procedures.</span>
-                            <span class="lang-ru">Наглядная демонстрация «Идеальной линии волос». Решения разработаны для точного отображения клинических протоколов и техники работы доктора Недима Ардыча в процедурах FUE/DHI.</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="mb-14 bg-slate-900 rounded-3xl p-6 sm:p-10 shadow-xl overflow-hidden relative border border-slate-800">
-            <!-- Decorative blur for dark section -->
-            <div class="absolute top-0 right-0 w-64 h-64 bg-brand-accent/20 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
-            <div class="absolute bottom-0 left-0 w-64 h-64 bg-brand-primary/50 rounded-full blur-3xl -ml-10 -mb-10 pointer-events-none"></div>
-            
-            <div class="relative z-10 text-center mb-8">
-                <div class="inline-flex items-center gap-2 px-3 py-1 bg-brand-accent/20 border border-brand-accent/30 rounded-full text-xs font-semibold text-brand-accent mb-4">
-                    <i class="ph-fill ph-video-camera animate-pulse"></i>
-                    <span class="lang-en">Live Demonstration</span>
-                    <span class="lang-ru">Живая демонстрация</span>
-                </div>
-                <h2 class="text-2xl sm:text-3xl font-bold text-white mb-3 tracking-tight">
-                    <span class="lang-en">Exhibition Ecosystem in Action</span>
-                    <span class="lang-ru">Экосистема в действии на выставке</span>
-                </h2>
-                <p class="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
-                    <span class="lang-en">Watch our interactive diagnostic and simulation modules (Wacom & iPad integration) capturing attention at medical congresses. Features real-time survival stats and AI chat support demos.</span>
-                    <span class="lang-ru">Посмотрите, как интерактивные модули (интеграция Wacom и iPad) привлекают внимание на медицинских конгрессах. Демонстрация статистики приживаемости и работы AI-чата.</span>
-                </p>
-            </div>
-            
-            <div class="relative w-full max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-[0_0_40px_-10px_rgba(2,132,199,0.3)] border border-slate-700 aspect-video bg-black group">
-                <!-- Замените 'demo-video.mp4' на актуальный путь к загруженному файлу -->
-                <video controls playsinline class="w-full h-full object-cover">
-                    <source src="demo-video.mp4" type="video/mp4">
-                    <span class="lang-en">Your browser does not support the video tag.</span>
-                    <span class="lang-ru">Ваш браузер не поддерживает видео.</span>
-                </video>
-            </div>
-        </section>
-
-        <section class="mb-14">
-            <div class="flex items-center justify-between mb-6 px-2">
-                <div>
-                    <h2 class="text-2xl font-bold text-brand-primary">
-                        <span class="lang-en">Live 3D Engine: 12-Month Cycle</span>
-                        <span class="lang-ru">Live 3D Engine: Цикл 12 месяцев</span>
+                    
+                    <h2 class="text-3xl font-bold text-brand-primary mb-3">
+                        <span class="lang-en">Let's build the future of aesthetics.</span>
+                        <span class="lang-ru">Создадим будущее эстетической медицины.</span>
                     </h2>
-                    <p class="text-sm text-slate-500 mt-1">
-                        <span class="lang-en">Dynamic 3D simulation loop of graft and dermal layers to visually mitigate patient fears.</span>
-                        <span class="lang-ru">3D-симуляция динамики графта и слоев дермы для наглядного снятия страхов пациента.</span>
+                    
+                    <p class="text-slate-500 mb-8 max-w-md text-sm leading-relaxed">
+                        <span class="lang-en">Ready to transform your clinic's patient experience? Contact us to discuss technical specifications and partnership details.</span>
+                        <span class="lang-ru">Готовы трансформировать клиентский опыт вашей клиники? Свяжитесь со мной для обсуждения технических деталей и формата партнерства.</span>
                     </p>
-                </div>
-                <div class="hidden md:flex items-center gap-2 text-xs font-semibold text-brand-accent bg-brand-accent/10 px-3 py-1.5 rounded-full">
-                    <i class="ph-fill ph-play-circle animate-pulse"></i>
-                    <span>Simulation Demo</span>
-                </div>
-            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <!-- Phase 1 -->
-                <div class="phase-card bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
-                    <div class="absolute top-0 right-0 p-3 opacity-10"><i class="ph-fill ph-syringe text-5xl"></i></div>
-                    <div class="text-xs font-bold text-brand-accent mb-2 tracking-wider">
-                        <span class="lang-en">PHASE 1 (DAYS 1-14)</span>
-                        <span class="lang-ru">ФАЗА 1 (ДЕНЬ 1-14)</span>
-                    </div>
-                    <h3 class="font-bold text-slate-800 text-lg mb-2">
-                        <span class="lang-en">Implantation</span>
-                        <span class="lang-ru">Посадка</span>
-                    </h3>
-                    <p class="text-sm text-slate-600">
-                        <span class="lang-en">Follicles are fixed in sapphire microchannels at a precise 40-45° angle. Primary engraftment and crust exfoliation.</span>
-                        <span class="lang-ru">Фолликулы фиксируются в сапфировых микроканалах под углом 40–45°. Первичное приживление и отшелушивание корочек.</span>
-                    </p>
-                </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Name & Role -->
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 shrink-0 rounded-xl bg-slate-50 border border-slate-100 text-brand-primary flex items-center justify-center shadow-sm">
+                                <i class="ph-fill ph-user-circle text-2xl"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-slate-800 text-base">
+                                    <span class="lang-en">Alexey Kuzmin</span>
+                                    <span class="lang-ru">Алексей Владимирович Кузьмин</span>
+                                </div>
+                                <div class="text-sm text-brand-accent font-medium mt-0.5">
+                                    <span class="lang-en">Founder & Lead Developer</span>
+                                    <span class="lang-ru">Основатель, Ведущий разработчик</span>
+                                </div>
+                                <div class="text-xs text-slate-500 mt-1">
+                                    <span class="lang-en">MDL Visual Systems Laboratory</span>
+                                    <span class="lang-ru">МДЛ | Лаборатория цифровых систем</span>
+                                </div>
+                            </div>
+                        </div>
 
-                <!-- Phase 2 -->
-                <div class="phase-card bg-rose-50 p-5 rounded-2xl border border-rose-100 shadow-sm relative overflow-hidden">
-                    <div class="absolute top-0 right-0 p-3 opacity-10"><i class="ph-fill ph-warning-circle text-5xl text-rose-500"></i></div>
-                    <div class="text-xs font-bold text-rose-500 mb-2 tracking-wider">
-                        <span class="lang-en">PHASE 2 (MONTHS 1-2)</span>
-                        <span class="lang-ru">ФАЗА 2 (МЕСЯЦ 1-2)</span>
-                    </div>
-                    <h3 class="font-bold text-slate-800 text-lg mb-2">
-                        <span class="lang-en">Shock-Loss</span>
-                        <span class="lang-ru">Шок-лосс</span>
-                    </h3>
-                    <p class="text-sm text-slate-600">
-                        <span class="lang-en">Hair shaft falls out, but the root lives! Simulator removes panic by showing the active root matrix within the dermis layer.</span>
-                        <span class="lang-ru">Стержень выпадает, но корень жив! Симулятор снимает панику пациента, демонстрируя активный матрикс в дерме.</span>
-                    </p>
-                </div>
+                        <!-- Contacts -->
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-blue-50 text-brand-accent flex items-center justify-center shrink-0">
+                                    <i class="ph-fill ph-envelope-simple text-lg"></i>
+                                </div>
+                                <a href="mailto:leksayleksay@gmail.com" class="text-sm font-medium text-slate-700 hover:text-brand-accent transition-colors">
+                                    leksayleksay@gmail.com
+                                </a>
+                            </div>
 
-                <!-- Phase 3 -->
-                <div class="phase-card bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
-                    <div class="absolute top-0 right-0 p-3 opacity-10"><i class="ph-fill ph-trend-up text-5xl"></i></div>
-                    <div class="text-xs font-bold text-emerald-500 mb-2 tracking-wider">
-                        <span class="lang-en">PHASE 3 (MONTHS 3-7)</span>
-                        <span class="lang-ru">ФАЗА 3 (МЕСЯЦ 3-7)</span>
-                    </div>
-                    <h3 class="font-bold text-slate-800 text-lg mb-2">
-                        <span class="lang-en">Growth (Anagen)</span>
-                        <span class="lang-ru">Рост (Анаген)</span>
-                    </h3>
-                    <p class="text-sm text-slate-600">
-                        <span class="lang-en">Active anagen phase. Thickening of the shaft, closure of fronto-temporal angles, and emergence of primary visual density.</span>
-                        <span class="lang-ru">Фаза анагена. Утолщение стержня, закрытие лобно-височных углов и появление первой визуальной плотности.</span>
-                    </p>
-                </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-blue-50 text-brand-accent flex items-center justify-center shrink-0">
+                                    <i class="ph-fill ph-phone text-lg"></i>
+                                </div>
+                                <a href="tel:+70000000000" class="text-sm font-medium text-slate-700 hover:text-brand-accent transition-colors">
+                                    +7 (___) ___-__-__ <!-- Замените на свой номер -->
+                                </a>
+                            </div>
 
-                <!-- Phase 4 -->
-                <div class="phase-card bg-slate-900 p-5 rounded-2xl border border-slate-800 shadow-sm relative overflow-hidden text-white">
-                    <div class="absolute top-0 right-0 p-3 opacity-10"><i class="ph-fill ph-crown text-5xl text-brand-gold"></i></div>
-                    <div class="text-xs font-bold text-brand-gold mb-2 tracking-wider">
-                        <span class="lang-en">PHASE 4 (MONTHS 8-12)</span>
-                        <span class="lang-ru">ФАЗА 4 (МЕСЯЦ 8-12)</span>
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-blue-50 text-brand-accent flex items-center justify-center shrink-0">
+                                    <i class="ph-fill ph-globe text-lg"></i>
+                                </div>
+                                <a href="https://museumdevlab.ru/" target="_blank" class="text-sm font-medium text-slate-700 hover:text-brand-accent transition-colors">
+                                    museumdevlab.ru
+                                </a>
+                            </div>
+                            
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center shrink-0">
+                                    <i class="ph-fill ph-map-pin text-lg"></i>
+                                </div>
+                                <div class="text-sm font-medium text-slate-500">
+                                    <span class="lang-en">St. Petersburg, Russia</span>
+                                    <span class="lang-ru">Санкт-Петербург, Россия</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="font-bold text-white text-lg mb-2">
-                        <span class="lang-en">Final Result</span>
-                        <span class="lang-ru">Финал</span>
-                    </h3>
-                    <p class="text-sm text-slate-300">
-                        <span class="lang-en">Density of 55-65 grafts/cm². Complete styling freedom: parts, texturizing clays, waxes, and gels.</span>
-                        <span class="lang-ru">Плотность 55–65 графтов/см². Свобода стрижек: пробор, текстурирующие глины, воски и гели.</span>
+                </div>
+                
+                <!-- Action Card -->
+                <div class="bg-gradient-to-br from-slate-900 to-brand-primary p-6 sm:p-8 rounded-2xl shadow-lg border border-slate-800 flex flex-col items-center justify-center text-center w-full md:w-72 shrink-0 group">
+                    <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                         <i class="ph-fill ph-paper-plane-tilt text-3xl text-brand-gold"></i>
+                    </div>
+                    <h4 class="text-white font-bold mb-2">
+                        <span class="lang-en">Request a Demo</span>
+                        <span class="lang-ru">Запросить демо</span>
+                    </h4>
+                    <p class="text-slate-400 text-xs mb-6">
+                        <span class="lang-en">Schedule a 15-minute presentation of our WebGL and AR modules.</span>
+                        <span class="lang-ru">Назначить 15-минутную встречу для презентации WebGL и AR решений.</span>
                     </p>
+                    <a href="mailto:leksayleksay@gmail.com?subject=MDL%20Partnership%20Inquiry" class="w-full py-3 bg-brand-accent hover:bg-sky-500 text-white text-sm font-bold rounded-xl transition-colors shadow-md">
+                        <span class="lang-en">Send Email</span>
+                        <span class="lang-ru">Написать письмо</span>
+                    </a>
                 </div>
             </div>
         </section>
-
-        <div class="space-y-4">
-            <h2 class="text-2xl font-bold text-brand-primary mb-6 px-2">
-                <span class="lang-en">Ecosystem Architecture (4 Pillars)</span>
-                <span class="lang-ru">Архитектура экосистемы (4 Модуля)</span>
-            </h2>
-
-            <!-- Module 1: Attract -->
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden transition-all hover:border-brand-accent/50">
-                <button onclick="toggleAccordion('acc-1')" class="w-full text-left p-6 sm:p-8 flex items-start sm:items-center justify-between gap-4 focus:outline-none">
-                    <div class="flex items-start sm:items-center gap-4 sm:gap-6">
-                        <div class="w-12 h-12 shrink-0 rounded-xl bg-blue-50 text-brand-accent flex items-center justify-center text-2xl">
-                            <i class="ph-fill ph-game-controller"></i>
-                        </div>
-                        <div>
-                            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
-                                <span class="lang-en">01. Attract (Marketing & Gamification)</span>
-                                <span class="lang-ru">01. Привлечение (Маркетинг и Игра)</span>
-                            </div>
-                            <h3 class="text-lg sm:text-xl font-bold text-brand-primary">
-                                <span class="lang-en">Interactive Exhibition Simulator</span>
-                                <span class="lang-ru">Интерактивный симулятор процедур</span>
-                            </h3>
-                            <p class="text-slate-500 text-sm mt-1 sm:max-w-2xl">
-                                <span class="lang-en">Capturing attention at clinic booths through gamification and vivid tech demonstration.</span>
-                                <span class="lang-ru">Привлечение внимания к стенду клиники на выставках за счет геймификации и яркой демонстрации технологий.</span>
-                            </p>
-                        </div>
-                    </div>
-                    <i id="chevron-acc-1" class="ph-bold ph-caret-down text-slate-400 text-xl chevron shrink-0 mt-2 sm:mt-0"></i>
-                </button>
-                
-                <div id="acc-1" class="accordion-content bg-slate-50 border-t border-slate-100">
-                    <div class="accordion-inner">
-                        <div class="p-6 sm:p-8 space-y-6 text-sm">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div>
-                                    <h4 class="font-bold text-brand-primary mb-2">
-                                        <span class="lang-en">Detailed Functionality</span>
-                                        <span class="lang-ru">Подробный функционал</span>
-                                    </h4>
-                                    <p class="text-slate-600 leading-relaxed mb-3">
-                                        <span class="lang-en">A touch-panel and smartphone application designed for exhibitions. The user views skin anatomy in detailed 3D and independently "performs" a micro-operation using on-screen interactive tools (<strong>extraction via punch, implantation via Choi Pen</strong>).</span>
-                                        <span class="lang-ru">Приложение-игра для тач-панелей и смартфонов на стендах. Пользователь в 3D изучает анатомию кожи и виртуально совершает микрооперацию (<strong>экстракция панчем, посадка Choi Pen</strong>).</span>
-                                    </p>
-                                    <p class="text-slate-600 leading-relaxed">
-                                        <span class="lang-en">This completely demystifies the procedure, generating a "wow-effect" and severely lowering the psychological barrier for potential clients at congresses.</span>
-                                        <span class="lang-ru">Это полностью демистифицирует операцию, создавая вау-эффект и критически снижая психологический барьер потенциального клиента на конгрессах.</span>
-                                    </p>
-                                </div>
-                                <div class="bg-white p-5 rounded-xl border border-slate-200">
-                                    <h4 class="font-bold text-brand-primary mb-3">
-                                        <span class="lang-en">Project Specifications</span>
-                                        <span class="lang-ru">Спецификации проекта</span>
-                                    </h4>
-                                    <ul class="space-y-3">
-                                        <li class="flex items-start gap-2 text-slate-600">
-                                            <i class="ph-fill ph-cpu text-brand-accent mt-0.5"></i>
-                                            <span>
-                                                <strong class="text-slate-800"><span class="lang-en">Tech Stack:</span><span class="lang-ru">Стек:</span></strong>
-                                                <span class="lang-en">Unity3D (Universal Render Pipeline - URP) for lag-free, cinematic graphics.</span>
-                                                <span class="lang-ru">Unity3D (URP) для достижения кинематографичной картинки без задержек.</span>
-                                            </span>
-                                        </li>
-                                        <li class="flex items-center gap-2 text-slate-600">
-                                            <i class="ph-fill ph-clock text-brand-accent"></i>
-                                            <span>
-                                                <strong class="text-slate-800"><span class="lang-en">Timeline:</span><span class="lang-ru">Сроки:</span></strong>
-                                                <span class="lang-en">1.5 – 2 months.</span>
-                                                <span class="lang-ru">1,5 – 2 месяца.</span>
-                                            </span>
-                                        </li>
-                                        <li class="flex items-center gap-2 text-slate-600">
-                                            <i class="ph-fill ph-currency-circle-dollar text-brand-accent"></i>
-                                            <span>
-                                                <strong class="text-slate-800"><span class="lang-en">Est. Value:</span><span class="lang-ru">Бюджет:</span></strong>
-                                                <span class="lang-en">450,000 — 600,000 ₽</span>
-                                                <span class="lang-ru">450 000 — 600 000 ₽</span>
-                                            </span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Module 2: Convert -->
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden transition-all hover:border-brand-accent/50">
-                <button onclick="toggleAccordion('acc-2')" class="w-full text-left p-6 sm:p-8 flex items-start sm:items-center justify-between gap-4 focus:outline-none">
-                    <div class="flex items-start sm:items-center gap-4 sm:gap-6">
-                        <div class="w-12 h-12 shrink-0 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center text-2xl relative">
-                            <div class="absolute -top-1 -right-1 w-3 h-3 bg-brand-gold rounded-full border-2 border-white animate-pulse"></div>
-                            <i class="ph-fill ph-target"></i>
-                        </div>
-                        <div>
-                            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
-                                <span class="lang-en">02. Convert (Sales) - FLAGSHIP</span>
-                                <span class="lang-ru">02. Продажи (Конверсия) - ФЛАГМАН</span>
-                            </div>
-                            <h3 class="text-lg sm:text-xl font-bold text-brand-primary">
-                                <span class="lang-en">3D Hairline Configurator & WebGL Tour</span>
-                                <span class="lang-ru">3D-конфигуратор линии волос и WebGL-тур</span>
-                            </h3>
-                            <p class="text-slate-500 text-sm mt-1 sm:max-w-2xl">
-                                <span class="lang-en">The doctor's ultimate tool for multiplying consultation-to-surgery conversion rates.</span>
-                                <span class="lang-ru">Инструмент врача для кратного роста конверсии первичных консультаций в реальные операции.</span>
-                            </p>
-                        </div>
-                    </div>
-                    <i id="chevron-acc-2" class="ph-bold ph-caret-down text-slate-400 text-xl chevron shrink-0 mt-2 sm:mt-0"></i>
-                </button>
-                
-                <div id="acc-2" class="accordion-content bg-slate-50 border-t border-slate-100">
-                    <div class="accordion-inner">
-                         <div class="p-6 sm:p-8 space-y-6 text-sm">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div>
-                                    <h4 class="font-bold text-brand-primary mb-2">
-                                        <span class="lang-en">Detailed Functionality</span>
-                                        <span class="lang-ru">Подробный функционал</span>
-                                    </h4>
-                                    <p class="text-slate-600 leading-relaxed mb-4">
-                                        <span class="lang-en"><strong>Hairline Configurator:</strong> Allows doctors to draw individualized hairlines directly during consultations, accounting for facial anatomy and graft density calculation using <strong>iPad ARKit / LiDAR</strong> sensors.</span>
-                                        <span class="lang-ru"><strong>Конфигуратор линии волос:</strong> Отрисовка индивидуальной границы волос прямо на приеме с учетом анатомии лица и плотности графтов, с использованием сканирования <strong>iPad ARKit / LiDAR</strong>.</span>
-                                    </p>
-                                    <p class="text-slate-600 leading-relaxed">
-                                        <span class="lang-en"><strong>WebGL Tour & Dashboards:</strong> Virtual tours of VIP suites/operating rooms for medical tourism. Includes math-driven dashboards (XCharts) showing survival statistics to justify the premium price tag.</span>
-                                        <span class="lang-ru"><strong>WebGL-тур и Дашборды:</strong> Виртуальный осмотр VIP-палат для медтуризма. Интеграция дашбордов (XCharts) для математического обоснования приживаемости и защиты премиального чека.</span>
-                                    </p>
-                                </div>
-                                <div class="bg-white p-5 rounded-xl border border-slate-200">
-                                    <h4 class="font-bold text-brand-primary mb-3">
-                                        <span class="lang-en">Project Specifications</span>
-                                        <span class="lang-ru">Спецификации проекта</span>
-                                    </h4>
-                                    <ul class="space-y-3">
-                                        <li class="flex items-start gap-2 text-slate-600">
-                                            <i class="ph-fill ph-code text-orange-500 mt-0.5"></i>
-                                            <span>
-                                                <strong class="text-slate-800"><span class="lang-en">Tech Stack:</span><span class="lang-ru">Стек:</span></strong>
-                                                <span class="lang-en">iPad ARKit, LiDAR integration, Blender 3D, WebGL for seamless browser execution.</span>
-                                                <span class="lang-ru">iPad ARKit / LiDAR, оптимизированные 3D-модели (Blender), WebGL для бесшовной работы.</span>
-                                            </span>
-                                        </li>
-                                        <li class="flex items-center gap-2 text-slate-600">
-                                            <i class="ph-fill ph-clock text-orange-500"></i>
-                                            <span>
-                                                <strong class="text-slate-800"><span class="lang-en">Timeline:</span><span class="lang-ru">Сроки:</span></strong>
-                                                <span class="lang-en">2 – 3 months.</span>
-                                                <span class="lang-ru">2 – 3 месяца.</span>
-                                            </span>
-                                        </li>
-                                        <li class="flex items-center gap-2 text-slate-600">
-                                            <i class="ph-fill ph-currency-circle-dollar text-orange-500"></i>
-                                            <span>
-                                                <strong class="text-slate-800"><span class="lang-en">Est. Value:</span><span class="lang-ru">Бюджет:</span></strong>
-                                                <span class="lang-en">800,000 — 1,200,000 ₽</span>
-                                                <span class="lang-ru">800 000 — 1 200 000 ₽</span>
-                                            </span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Module 3: Retain -->
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden transition-all hover:border-brand-accent/50">
-                <button onclick="toggleAccordion('acc-3')" class="w-full text-left p-6 sm:p-8 flex items-start sm:items-center justify-between gap-4 focus:outline-none">
-                    <div class="flex items-start sm:items-center gap-4 sm:gap-6">
-                        <div class="w-12 h-12 shrink-0 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl">
-                            <i class="ph-fill ph-robot"></i>
-                        </div>
-                        <div>
-                            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
-                                <span class="lang-en">03. Retain (Service & Care)</span>
-                                <span class="lang-ru">03. Сервис (Удержание и Забота)</span>
-                            </div>
-                            <h3 class="text-lg sm:text-xl font-bold text-brand-primary">
-                                <span class="lang-en">24/7 AI Healing Agent & Tracker</span>
-                                <span class="lang-ru">AI-ассистент 24/7 и таймлайн нормы</span>
-                            </h3>
-                            <p class="text-slate-500 text-sm mt-1 sm:max-w-2xl">
-                                <span class="lang-en">Premium post-op service designed to alleviate up to 70% of call-center load and mitigate panic.</span>
-                                <span class="lang-ru">Премиальный сервис, снимающий до 70% нагрузки с колл-центра и купирующий тревожность.</span>
-                            </p>
-                        </div>
-                    </div>
-                    <i id="chevron-acc-3" class="ph-bold ph-caret-down text-slate-400 text-xl chevron shrink-0 mt-2 sm:mt-0"></i>
-                </button>
-                
-                <div id="acc-3" class="accordion-content bg-slate-50 border-t border-slate-100">
-                    <div class="accordion-inner">
-                         <div class="p-6 sm:p-8 space-y-6 text-sm">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div>
-                                    <h4 class="font-bold text-brand-primary mb-2">
-                                        <span class="lang-en">Detailed Functionality</span>
-                                        <span class="lang-ru">Подробный функционал</span>
-                                    </h4>
-                                    <p class="text-slate-600 leading-relaxed mb-3">
-                                        <span class="lang-en"><strong>3D Shock-Loss Timeline:</strong> Specifically during weeks 2–8, the patient views a visual confirmation of biologically normal shock loss, completely neutralizing panic. Includes a photo progress diary.</span>
-                                        <span class="lang-ru"><strong>3D-таймлайн нормы заживления:</strong> На 2–8 неделе пациент видит наглядную графику: стержень выпал, но фолликул жив и делится. Паника исключается. Ведение дневника фотопрогресса.</span>
-                                    </p>
-                                    <p class="text-slate-600 leading-relaxed">
-                                        <span class="lang-en"><strong>Autonomous AI Assistant:</strong> Trained strictly on MediEstetic's medical protocols. Available 24/7 to answer frightening questions, dramatically reducing the burden on clinical staff.</span>
-                                        <span class="lang-ru"><strong>Автономный локальный AI:</strong> Обучен строго по регламентам «Медиэстетик», отвечает круглосуточно, снимая рутинную нагрузку с врачей.</span>
-                                    </p>
-                                </div>
-                                <div class="bg-white p-5 rounded-xl border border-slate-200">
-                                    <h4 class="font-bold text-brand-primary mb-3">
-                                        <span class="lang-en">Project Specifications</span>
-                                        <span class="lang-ru">Спецификации проекта</span>
-                                    </h4>
-                                    <ul class="space-y-3">
-                                        <li class="flex items-start gap-2 text-slate-600">
-                                            <i class="ph-fill ph-brain text-emerald-600 mt-0.5"></i>
-                                            <span>
-                                                <strong class="text-slate-800"><span class="lang-en">Tech Stack:</span><span class="lang-ru">Стек:</span></strong>
-                                                <span class="lang-en">Local LLM + RAG Framework, Secure DB Architecture.</span>
-                                                <span class="lang-ru">Интеграция локальной LLM + RAG, архитектура БД.</span>
-                                            </span>
-                                        </li>
-                                        <li class="flex items-center gap-2 text-slate-600">
-                                            <i class="ph-fill ph-clock text-emerald-600"></i>
-                                            <span>
-                                                <strong class="text-slate-800"><span class="lang-en">Timeline:</span><span class="lang-ru">Сроки:</span></strong>
-                                                <span class="lang-en">3 – 4 months.</span>
-                                                <span class="lang-ru">3 – 4 месяца.</span>
-                                            </span>
-                                        </li>
-                                        <li class="flex items-center gap-2 text-slate-600">
-                                            <i class="ph-fill ph-currency-circle-dollar text-emerald-600"></i>
-                                            <span>
-                                                <strong class="text-slate-800"><span class="lang-en">Est. Value:</span><span class="lang-ru">Бюджет:</span></strong>
-                                                <span class="lang-en">1,300,000 — 1,500,000 ₽</span>
-                                                <span class="lang-ru">1 300 000 — 1 500 000 ₽</span>
-                                            </span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Module 4: Educate -->
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden transition-all hover:border-brand-accent/50">
-                <button onclick="toggleAccordion('acc-4')" class="w-full text-left p-6 sm:p-8 flex items-start sm:items-center justify-between gap-4 focus:outline-none">
-                    <div class="flex items-start sm:items-center gap-4 sm:gap-6">
-                        <div class="w-12 h-12 shrink-0 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl">
-                            <i class="ph-fill ph-graduation-cap"></i>
-                        </div>
-                        <div>
-                            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
-                                <span class="lang-en">04. Educate (Science & Training)</span>
-                                <span class="lang-ru">04. Обучение (Наука и Тренинг)</span>
-                            </div>
-                            <h3 class="text-lg sm:text-xl font-bold text-brand-primary">
-                                <span class="lang-en">3D Microanatomy & Surgery Simulators</span>
-                                <span class="lang-ru">3D-микроанатомия посадки графтов</span>
-                            </h3>
-                            <p class="text-slate-500 text-sm mt-1 sm:max-w-2xl">
-                                <span class="lang-en">Standardizing expertise for interns and creating materials for Dr. Ardıç's international symposiums.</span>
-                                <span class="lang-ru">Стандартизация экспертизы для интернов и материалы для конгрессов Dr. Nedim Ardıç.</span>
-                            </p>
-                        </div>
-                    </div>
-                    <i id="chevron-acc-4" class="ph-bold ph-caret-down text-slate-400 text-xl chevron shrink-0 mt-2 sm:mt-0"></i>
-                </button>
-                
-                <div id="acc-4" class="accordion-content bg-slate-50 border-t border-slate-100">
-                    <div class="accordion-inner">
-                         <div class="p-6 sm:p-8 space-y-6 text-sm">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div>
-                                    <h4 class="font-bold text-brand-primary mb-2">
-                                        <span class="lang-en">Detailed Functionality</span>
-                                        <span class="lang-ru">Подробный функционал</span>
-                                    </h4>
-                                    <p class="text-slate-600 leading-relaxed mb-3">
-                                        <span class="lang-en"><strong>Visual Training Base:</strong> 2-3 minute micro-surgical interactive videos demonstrating biomechanics: insertion depth, correct angle, and protection against follicle transection.</span>
-                                        <span class="lang-ru"><strong>Визуальная база для интернов:</strong> 2–3 минутные микрохирургические видеоролики, демонстрирующие биомеханику посадки, глубину ввода, угол наклона и защиту от транссекции фолликула.</span>
-                                    </p>
-                                    <p class="text-slate-600 leading-relaxed">
-                                        <span class="lang-en"><strong>Scientific & Congress Presentations:</strong> Cinematic micro-structural graphics that can be used to support Dr. Nedim Ardıç's presentations at medical symposiums and educational events.</span>
-                                        <span class="lang-ru"><strong>Материалы для научных конгрессов:</strong> Кинематографичная микроструктурная графика для визуального сопровождения докладов доктора Недима Ардыча на медицинских симпозиумах.</span>
-                                    </p>
-                                </div>
-                                <div class="bg-white p-5 rounded-xl border border-slate-200">
-                                    <h4 class="font-bold text-brand-primary mb-3">
-                                        <span class="lang-en">Project Specifications</span>
-                                        <span class="lang-ru">Спецификации проекта</span>
-                                    </h4>
-                                    <ul class="space-y-3">
-                                        <li class="flex items-start gap-2 text-slate-600">
-                                            <i class="ph-fill ph-video text-purple-600 mt-0.5"></i>
-                                            <span>
-                                                <strong class="text-slate-800"><span class="lang-en">Tech Stack:</span><span class="lang-ru">Стек:</span></strong>
-                                                <span class="lang-en">Blender (Cycles Engine) for photorealistic micro-rendering.</span>
-                                                <span class="lang-ru">Рендеринг в Blender (Cycles) для фотореализма микроструктур.</span>
-                                            </span>
-                                        </li>
-                                        <li class="flex items-center gap-2 text-slate-600">
-                                            <i class="ph-fill ph-clock text-purple-600"></i>
-                                            <span>
-                                                <strong class="text-slate-800"><span class="lang-en">Timeline:</span><span class="lang-ru">Сроки:</span></strong>
-                                                <span class="lang-en">2 – 3 weeks per scenario.</span>
-                                                <span class="lang-ru">2 – 3 недели на сценарий.</span>
-                                            </span>
-                                        </li>
-                                        <li class="flex items-center gap-2 text-slate-600">
-                                            <i class="ph-fill ph-currency-circle-dollar text-purple-600"></i>
-                                            <span>
-                                                <strong class="text-slate-800"><span class="lang-en">Est. Value:</span><span class="lang-ru">Бюджет:</span></strong>
-                                                <span class="lang-en">100,000 — 150,000 ₽ (per module)</span>
-                                                <span class="lang-ru">100 000 — 150 000 ₽ (за один ролик).</span>
-                                            </span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-slate-900 rounded-2xl shadow-lg overflow-hidden mt-10 transition-all border border-slate-800">
-                <button onclick="toggleAccordion('acc-5')" class="w-full text-left p-6 sm:p-8 flex items-start sm:items-center justify-between gap-4 focus:outline-none hover:bg-slate-800 transition-colors">
-                    <div class="flex items-start sm:items-center gap-4 sm:gap-6">
-                        <div class="w-12 h-12 shrink-0 rounded-xl bg-slate-800 border border-slate-700 text-brand-gold flex items-center justify-center text-2xl">
-                            <i class="ph-fill ph-scales"></i>
-                        </div>
-                        <div>
-                            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
-                                <span class="lang-en">Legal & Barter Financial Framework</span>
-                                <span class="lang-ru">Юридическая и финансовая модель бартера</span>
-                            </div>
-                            <h3 class="text-lg sm:text-xl font-bold text-white">
-                                <span class="lang-en">Tax-Exempt Barter Structure & Data Security</span>
-                                <span class="lang-ru">Налоговые преимущества и защита биометрии</span>
-                            </h3>
-                        </div>
-                    </div>
-                    <i id="chevron-acc-5" class="ph-bold ph-caret-down text-slate-400 text-xl chevron shrink-0 mt-2 sm:mt-0"></i>
-                </button>
-                
-                <div id="acc-5" class="accordion-content bg-slate-800 border-t border-slate-700">
-                    <div class="accordion-inner">
-                         <div class="p-6 sm:p-8 space-y-6 text-sm text-slate-300">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div>
-                                    <h4 class="font-bold text-white mb-3 flex items-center gap-2">
-                                        <i class="ph-fill ph-file-text text-brand-gold"></i>
-                                        <span class="lang-en">Tax Benefits (Art. 149 NK RF)</span>
-                                        <span class="lang-ru">Налоговые преимущества (Ст. 149 НК РФ)</span>
-                                    </h4>
-                                    <p class="leading-relaxed text-slate-400">
-                                        <span class="lang-en">Under a Contract of Exchange, medical services rendered by licensed clinics are <strong>VAT-exempt</strong>. MediEstetic acquires IT assets worth ~3M ₽ by expending only the prime cost of consumables and doctors' time (<strong>approx. 30-35% of retail price</strong>), creating an exceptional ROI.</span>
-                                        <span class="lang-ru">По договору мены медуслуги лицензированной клиники <strong>освобождены от НДС</strong>. Клиника приобретает IT-софт стоимостью ~3 млн ₽ с затратой лишь себестоимости материалов и времени врачей (<strong>около 30-35% от розничного прайса</strong>), что дает исключительный ROI.</span>
-                                    </p>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-white mb-3 flex items-center gap-2">
-                                        <i class="ph-fill ph-shield-check text-brand-gold"></i>
-                                        <span class="lang-en">Biometric Data Security (152-FZ)</span>
-                                        <span class="lang-ru">Защита биометрии (152-ФЗ)</span>
-                                    </h4>
-                                    <p class="leading-relaxed text-slate-400">
-                                        <span class="lang-en">LiDAR 3D face scans are classified as special category biometric data. Our architecture guarantees strict compliance: patient e-signatures, secure local caching without third-party cloud uploads, and strict auto-deletion protocols post-consultation.</span>
-                                        <span class="lang-ru">3D-сканы лица классифицируются как биометрия спецкатегории. Архитектура гарантирует: согласие с ЭЦП, локальный кэш без сторонних облаков и строгие регламенты автоудаления файлов.</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </main>
-
-    <footer class="max-w-6xl mx-auto px-4 sm:px-6 py-8 mt-8 border-t border-slate-200 text-center">
-        <p class="text-sm text-slate-400">
-            <span class="lang-en">© 2026 MDL Visual Systems Laboratory • MediEstetic Proposal</span>
-            <span class="lang-ru">© 2026 МДЛ Лаборатория • Концепт-предложение для клиники Медиэстетик</span>
-        </p>
-    </footer>
-
-    <script>
-        // Language Toggle Logic
-        let currentLang = 'en';
-        
-        function setLang(lang) {
-            currentLang = lang;
-            const body = document.body;
-            const btnEn = document.getElementById('btn-en');
-            const btnRu = document.getElementById('btn-ru');
-
-            if (lang === 'ru') {
-                body.classList.add('show-ru');
-                btnRu.className = "px-4 py-1.5 rounded-md transition-all bg-white shadow-sm text-brand-primary";
-                btnEn.className = "px-4 py-1.5 rounded-md transition-all text-slate-500 hover:text-brand-primary";
-            } else {
-                body.classList.remove('show-ru');
-                btnEn.className = "px-4 py-1.5 rounded-md transition-all bg-white shadow-sm text-brand-primary";
-                btnRu.className = "px-4 py-1.5 rounded-md transition-all text-slate-500 hover:text-brand-primary";
-            }
-        }
-
-        // Accordion Toggle Logic
-        function toggleAccordion(id) {
-            const content = document.getElementById(id);
-            const chevron = document.getElementById(`chevron-${id}`);
-            
-            const isOpen = content.classList.contains('open');
-            
-            // Close all accordions first for clean UI experience
-            document.querySelectorAll('.accordion-content').forEach(el => {
-                el.classList.remove('open');
-            });
-            document.querySelectorAll('.chevron').forEach(el => {
-                el.classList.remove('open-chevron');
-            });
-
-            // If it wasn't open, open it now
-            if (!isOpen) {
-                content.classList.add('open');
-                chevron.classList.add('open-chevron');
-            }
-        }
-        
-        // Ensure initial state is set
-        window.onload = () => {
-            setLang('en'); // Keeps English default for Turkish surgeon
-            // Open the Convert (Sales) tab by default
-            setTimeout(() => toggleAccordion('acc-2'), 400);
-        };
-    </script>
-</body>
-</html>
